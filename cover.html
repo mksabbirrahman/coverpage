@@ -7,8 +7,7 @@
 <style>
 
 body{
-font-family:"Times New Roman", serif;
-background:white;
+font-family:"Times New Roman";
 }
 
 .page{
@@ -28,74 +27,31 @@ margin-right:20px;
 }
 
 .title{
-text-align:center;
 flex:1;
-}
-
-.title h1{
-font-size:28px;
-margin:0;
-}
-
-.title h2{
-font-size:20px;
-margin:5px 0;
-font-weight:normal;
-}
-
-.centerText{
 text-align:center;
-font-size:20px;
-margin-top:10px;
 }
 
-.dateTable{
+.dateTable, .marksTable{
 width:100%;
-margin-top:20px;
 border-collapse:collapse;
+margin-top:20px;
 }
 
-.dateTable td{
+.dateTable td, .marksTable td{
 border:2px solid black;
-padding:8px;
-font-size:18px;
-}
-
-.section{
-margin-top:30px;
-font-size:20px;
+padding:10px;
+text-align:center;
 }
 
 .submittedBox{
 border:2px solid black;
+padding:15px;
 margin-top:40px;
-padding:15px;
-font-size:20px;
-}
-
-.submittedTitle{
-text-align:center;
-font-style:italic;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.marksTable{
-width:100%;
-margin-top:30px;
-border-collapse:collapse;
-}
-
-.marksTable td{
-border:2px solid black;
-padding:15px;
-font-size:20px;
-text-align:center;
 }
 
 .printBtn{
 margin-top:20px;
-padding:10px 20px;
+padding:10px;
 background:black;
 color:white;
 border:none;
@@ -122,17 +78,14 @@ display:none;
 
 <div class="title">
 
-<h1>Department of Electrical and Electronic Engineering</h1>
+<h2>Department of Electrical and Electronic Engineering</h2>
 
-<h2>Dhaka University of Engineering and Technology, Gazipur-1707</h2>
+<h3>Dhaka University of Engineering and Technology, Gazipur-1707</h3>
 
-<div class="centerText">
-Course Title: <span id="courseTitle"></span>
-</div>
-
-<div class="centerText">
+<p>
+Course Title: <span id="courseTitle"></span><br>
 Course Code: <span id="courseCode"></span>
-</div>
+</p>
 
 </div>
 
@@ -142,13 +95,13 @@ Course Code: <span id="courseCode"></span>
 
 <tr>
 
-<td><b>Date of Allocation:</b></td>
+<td><b>Date of Allocation</b></td>
 
 <td id="allocD"></td>
 <td id="allocM"></td>
 <td id="allocY"></td>
 
-<td><b>Date of Submission:</b></td>
+<td><b>Date of Submission</b></td>
 
 <td id="subD"></td>
 <td id="subM"></td>
@@ -159,33 +112,122 @@ Course Code: <span id="courseCode"></span>
 <tr>
 
 <td></td>
-<td align="center">D</td>
-<td align="center">M</td>
-<td align="center">Y</td>
+<td>D</td>
+<td>M</td>
+<td>Y</td>
 
 <td></td>
-<td align="center">D</td>
-<td align="center">M</td>
-<td align="center">Y</td>
+<td>D</td>
+<td>M</td>
+<td>Y</td>
 
 </tr>
 
 </table>
 
-<div class="section">
-Experiment No: <span id="expNo"></span>
-</div>
+<p>Experiment No: <span id="expNo"></span></p>
 
-<div class="section">
-Name of the Experiment: <span id="expName"></span>
-</div>
+<p>Name of the Experiment: <span id="expName"></span></p>
 
 <div class="submittedBox">
 
-<div class="submittedTitle">
-Submitted by
+<h3 style="text-align:center;">Submitted by</h3>
+
+<p>Name: <span id="studentName"></span></p>
+
+<p>Department: EEE</p>
+
+<p>Student ID: <span id="studentID"></span></p>
+
+<p>Group No: <span id="groupNo"></span></p>
+
+<p>Year / Semester: <span id="yearSem"></span></p>
+
+<p>Session: <span id="session"></span></p>
+
 </div>
 
+<table class="marksTable">
+
+<tr>
+
+<td><b>Marks Allocated</b></td>
+<td><b>Marks Obtained</b></td>
+
+</tr>
+
+<tr>
+
+<td height="60"></td>
+<td></td>
+
+</tr>
+
+</table>
+
+<button class="printBtn" onclick="window.print()">
+Save as PDF
+</button>
+
+</div>
+
+<script>
+
+// simple fields
+document.getElementById("courseTitle").innerText = localStorage.getItem("courseTitle") || "";
+
+document.getElementById("courseCode").innerText = localStorage.getItem("courseCode") || "";
+
+document.getElementById("expNo").innerText = localStorage.getItem("expNo") || "";
+
+document.getElementById("expName").innerText = localStorage.getItem("expName") || "";
+
+document.getElementById("studentName").innerText = localStorage.getItem("studentName") || "";
+
+document.getElementById("studentID").innerText = localStorage.getItem("studentID") || "";
+
+document.getElementById("groupNo").innerText = localStorage.getItem("groupNo") || "";
+
+document.getElementById("yearSem").innerText = localStorage.getItem("yearSem") || "";
+
+document.getElementById("session").innerText = localStorage.getItem("session") || "";
+
+
+// allocation date
+let allocDate = localStorage.getItem("allocationDate");
+
+if(allocDate){
+
+let parts = allocDate.split("-");
+
+document.getElementById("allocY").innerText = parts[0];
+
+document.getElementById("allocM").innerText = parts[1];
+
+document.getElementById("allocD").innerText = parts[2];
+
+}
+
+
+// submission date
+let subDate = localStorage.getItem("submissionDate");
+
+if(subDate){
+
+let parts = subDate.split("-");
+
+document.getElementById("subY").innerText = parts[0];
+
+document.getElementById("subM").innerText = parts[1];
+
+document.getElementById("subD").innerText = parts[2];
+
+}
+
+</script>
+
+</body>
+</html>
 <p>Name: <span id="studentName"></span></p>
 
 <p>Department: EEE</p>
