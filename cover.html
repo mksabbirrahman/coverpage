@@ -23,7 +23,8 @@ align-items:center;
 }
 
 .logo{
-width:140px;
+width:130px;
+margin-right:20px;
 }
 
 .headerText{
@@ -34,47 +35,42 @@ text-align:center;
 .headerText h1{
 font-size:30px;
 margin:0;
-font-weight:bold;
 }
 
 .headerText h2{
 font-size:20px;
-margin:5px 0;
+margin:5px;
 font-weight:normal;
 }
 
 .headerText p{
 font-size:20px;
-margin:3px;
+margin:4px;
 }
 
-.dateSection{
+.mainDateTable{
+border-collapse:collapse;
 margin-top:30px;
-display:flex;
-justify-content:space-between;
 }
 
-.dateBlock{
-display:flex;
-align-items:center;
-}
-
-.dateLabel{
+.labelCell{
 border:2px solid black;
-padding:10px;
 font-size:20px;
 font-weight:bold;
+padding:10px 20px;
+vertical-align:middle;
 }
 
-.dateTable{
+.innerDateTable{
 border-collapse:collapse;
 }
 
-.dateTable td{
+.innerDateTable td{
 border:2px solid black;
-width:50px;
-height:40px;
+width:55px;
+height:42px;
 text-align:center;
+font-size:18px;
 font-weight:bold;
 }
 
@@ -106,8 +102,8 @@ margin-top:40px;
 .marksTable td{
 border:2px solid black;
 height:60px;
-font-size:20px;
 text-align:center;
+font-size:20px;
 font-weight:bold;
 }
 
@@ -156,57 +152,53 @@ Course Code: <span id="courseCode"></span>
 
 </div>
 
-<div class="dateSection">
+<table class="mainDateTable">
 
-<div class="dateBlock">
+<tr>
 
-<div class="dateLabel">
+<td class="labelCell">
 Date of Allocation:
-</div>
+</td>
 
-<table class="dateTable">
-
+<td>
+<table class="innerDateTable">
 <tr>
 <td>D</td>
 <td>M</td>
 <td>Y</td>
 </tr>
-
 <tr>
 <td id="allocD"></td>
 <td id="allocM"></td>
 <td id="allocY"></td>
 </tr>
-
 </table>
+</td>
 
-</div>
+<td style="width:60px;"></td>
 
-<div class="dateBlock">
-
-<div class="dateLabel">
+<td class="labelCell">
 Date of Submission:
-</div>
+</td>
 
-<table class="dateTable">
-
+<td>
+<table class="innerDateTable">
 <tr>
 <td>D</td>
 <td>M</td>
 <td>Y</td>
 </tr>
-
 <tr>
 <td id="subD"></td>
 <td id="subM"></td>
 <td id="subY"></td>
 </tr>
+</table>
+</td>
+
+</tr>
 
 </table>
-
-</div>
-
-</div>
 
 <div class="section">
 <b>Experiment No:</b> <span id="expNo"></span>
@@ -239,17 +231,13 @@ Submitted by
 <table class="marksTable">
 
 <tr>
-
 <td>Marks Allocated</td>
 <td>Marks Obtained</td>
-
 </tr>
 
 <tr>
-
 <td></td>
 <td></td>
-
 </tr>
 
 </table>
@@ -262,31 +250,33 @@ Save as PDF
 
 <script>
 
-// fill text
-courseTitle.innerText = localStorage.courseTitle || "";
-courseCode.innerText = localStorage.courseCode || "";
-expNo.innerText = localStorage.expNo || "";
-expName.innerText = localStorage.expName || "";
-studentName.innerText = localStorage.studentName || "";
-studentID.innerText = localStorage.studentID || "";
-groupNo.innerText = localStorage.groupNo || "";
-yearSem.innerText = localStorage.yearSem || "";
-session.innerText = localStorage.session || "";
+// Fill text fields
+courseTitle.innerText = localStorage.getItem("courseTitle") || "";
+courseCode.innerText = localStorage.getItem("courseCode") || "";
+expNo.innerText = localStorage.getItem("expNo") || "";
+expName.innerText = localStorage.getItem("expName") || "";
+studentName.innerText = localStorage.getItem("studentName") || "";
+studentID.innerText = localStorage.getItem("studentID") || "";
+groupNo.innerText = localStorage.getItem("groupNo") || "";
+yearSem.innerText = localStorage.getItem("yearSem") || "";
+session.innerText = localStorage.getItem("session") || "";
 
-// allocation date
-if(localStorage.allocationDate){
-let d = localStorage.allocationDate.split("-");
-allocY.innerText = d[0];
-allocM.innerText = d[1];
-allocD.innerText = d[2];
+// Allocation date
+let alloc = localStorage.getItem("allocationDate");
+if(alloc){
+let parts = alloc.split("-");
+allocY.innerText = parts[0];
+allocM.innerText = parts[1];
+allocD.innerText = parts[2];
 }
 
-// submission date
-if(localStorage.submissionDate){
-let d = localStorage.submissionDate.split("-");
-subY.innerText = d[0];
-subM.innerText = d[1];
-subD.innerText = d[2];
+// Submission date
+let sub = localStorage.getItem("submissionDate");
+if(sub){
+let parts = sub.split("-");
+subY.innerText = parts[0];
+subM.innerText = parts[1];
+subD.innerText = parts[2];
 }
 
 </script>
