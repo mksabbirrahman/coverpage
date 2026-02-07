@@ -8,25 +8,43 @@
 
 body{
 font-family:"Times New Roman", serif;
+background:white;
 }
 
 .page{
 width:800px;
 margin:auto;
-padding-top:50px;
+padding-top:40px;
 }
 
 .center{
 text-align:center;
 }
 
-.space{
+.logo{
+width:90px;
+margin-bottom:10px;
+}
+
+.line{
+margin-top:12px;
+font-size:18px;
+}
+
+.submitted{
+margin-top:40px;
+text-align:center;
+font-size:20px;
+}
+
+.info{
 margin-top:20px;
+font-size:18px;
 }
 
 .printBtn{
-margin-top:30px;
-padding:10px;
+margin-top:40px;
+padding:10px 20px;
 background:black;
 color:white;
 border:none;
@@ -51,13 +69,19 @@ display:none;
 
 <div class="center">
 
-<h2>Department of Electrical and Electronic Engineering</h2>
+<img src="logo.png" class="logo">
 
-<h3>Dhaka University of Engineering and Technology, Gazipur-1707</h3>
+<div class="line">
+<b>Department of Electrical and Electronic Engineering</b>
+</div>
+
+<div class="line">
+Dhaka University of Engineering and Technology, Gazipur-1707
+</div>
 
 </div>
 
-<div class="space">
+<div class="info">
 
 <p><b>Course Title:</b> <span id="courseTitle"></span></p>
 
@@ -73,13 +97,11 @@ display:none;
 
 </div>
 
-<div class="center space">
-
-<h3>Submitted by</h3>
-
+<div class="submitted">
+<b>Submitted by</b>
 </div>
 
-<div class="space">
+<div class="info">
 
 <p><b>Name:</b> <span id="studentName"></span></p>
 
@@ -98,7 +120,7 @@ display:none;
 <div class="center">
 
 <button class="printBtn" onclick="window.print()">
-Print / Save as PDF
+Save as PDF
 </button>
 
 </div>
@@ -107,27 +129,17 @@ Print / Save as PDF
 
 <script>
 
-document.getElementById("courseTitle").innerText = localStorage.getItem("courseTitle");
-
-document.getElementById("courseCode").innerText = localStorage.getItem("courseCode");
-
-document.getElementById("allocationDate").innerText = localStorage.getItem("allocationDate");
-
-document.getElementById("submissionDate").innerText = localStorage.getItem("submissionDate");
-
-document.getElementById("expNo").innerText = localStorage.getItem("expNo");
-
-document.getElementById("expName").innerText = localStorage.getItem("expName");
-
-document.getElementById("studentName").innerText = localStorage.getItem("studentName");
-
-document.getElementById("studentID").innerText = localStorage.getItem("studentID");
-
-document.getElementById("groupNo").innerText = localStorage.getItem("groupNo");
-
-document.getElementById("yearSem").innerText = localStorage.getItem("yearSem");
-
-document.getElementById("session").innerText = localStorage.getItem("session");
+courseTitle.innerText = localStorage.getItem("courseTitle");
+courseCode.innerText = localStorage.getItem("courseCode");
+allocationDate.innerText = localStorage.getItem("allocationDate");
+submissionDate.innerText = localStorage.getItem("submissionDate");
+expNo.innerText = localStorage.getItem("expNo");
+expName.innerText = localStorage.getItem("expName");
+studentName.innerText = localStorage.getItem("studentName");
+studentID.innerText = localStorage.getItem("studentID");
+groupNo.innerText = localStorage.getItem("groupNo");
+yearSem.innerText = localStorage.getItem("yearSem");
+session.innerText = localStorage.getItem("session");
 
 </script>
 
