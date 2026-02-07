@@ -7,11 +7,12 @@
 <style>
 
 body{
-font-family:"Times New Roman";
+font-family:"Times New Roman", serif;
+background:white;
 }
 
 .page{
-width:850px;
+width:900px;
 margin:auto;
 padding:40px;
 }
@@ -22,36 +23,97 @@ align-items:center;
 }
 
 .logo{
-width:120px;
-margin-right:20px;
+width:140px;
 }
 
-.title{
+.headerText{
 flex:1;
 text-align:center;
 }
 
-.dateTable, .marksTable{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
+.headerText h1{
+font-size:30px;
+margin:0;
+font-weight:bold;
 }
 
-.dateTable td, .marksTable td{
+.headerText h2{
+font-size:20px;
+margin:5px 0;
+font-weight:normal;
+}
+
+.headerText p{
+font-size:20px;
+margin:3px;
+}
+
+.dateSection{
+margin-top:30px;
+display:flex;
+justify-content:space-between;
+}
+
+.dateBlock{
+display:flex;
+align-items:center;
+}
+
+.dateLabel{
 border:2px solid black;
 padding:10px;
+font-size:20px;
+font-weight:bold;
+}
+
+.dateTable{
+border-collapse:collapse;
+}
+
+.dateTable td{
+border:2px solid black;
+width:50px;
+height:40px;
 text-align:center;
+font-weight:bold;
+}
+
+.section{
+margin-top:40px;
+font-size:22px;
 }
 
 .submittedBox{
+margin-top:80px;
 border:2px solid black;
-padding:15px;
+padding:20px;
+font-size:20px;
+}
+
+.submittedTitle{
+text-align:center;
+font-style:italic;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+.marksTable{
+width:100%;
+border-collapse:collapse;
 margin-top:40px;
+}
+
+.marksTable td{
+border:2px solid black;
+height:60px;
+font-size:20px;
+text-align:center;
+font-weight:bold;
 }
 
 .printBtn{
 margin-top:20px;
-padding:10px;
+padding:10px 20px;
 background:black;
 color:white;
 border:none;
@@ -76,14 +138,17 @@ display:none;
 
 <img src="logo.png" class="logo">
 
-<div class="title">
+<div class="headerText">
 
-<h2>Department of Electrical and Electronic Engineering</h2>
+<h1>Department of Electrical and Electronic Engineering</h1>
 
-<h3>Dhaka University of Engineering and Technology, Gazipur-1707</h3>
+<h2>Dhaka University of Engineering and Technology, Gazipur-1707</h2>
 
 <p>
-Course Title: <span id="courseTitle"></span><br>
+Course Title: <span id="courseTitle"></span>
+</p>
+
+<p>
 Course Code: <span id="courseCode"></span>
 </p>
 
@@ -91,59 +156,83 @@ Course Code: <span id="courseCode"></span>
 
 </div>
 
+<div class="dateSection">
+
+<div class="dateBlock">
+
+<div class="dateLabel">
+Date of Allocation:
+</div>
+
 <table class="dateTable">
 
 <tr>
+<td>D</td>
+<td>M</td>
+<td>Y</td>
+</tr>
 
-<td><b>Date of Allocation</b></td>
-
+<tr>
 <td id="allocD"></td>
 <td id="allocM"></td>
 <td id="allocY"></td>
+</tr>
 
-<td><b>Date of Submission</b></td>
+</table>
 
+</div>
+
+<div class="dateBlock">
+
+<div class="dateLabel">
+Date of Submission:
+</div>
+
+<table class="dateTable">
+
+<tr>
+<td>D</td>
+<td>M</td>
+<td>Y</td>
+</tr>
+
+<tr>
 <td id="subD"></td>
 <td id="subM"></td>
 <td id="subY"></td>
-
-</tr>
-
-<tr>
-
-<td></td>
-<td>D</td>
-<td>M</td>
-<td>Y</td>
-
-<td></td>
-<td>D</td>
-<td>M</td>
-<td>Y</td>
-
 </tr>
 
 </table>
 
-<p>Experiment No: <span id="expNo"></span></p>
+</div>
 
-<p>Name of the Experiment: <span id="expName"></span></p>
+</div>
+
+<div class="section">
+<b>Experiment No:</b> <span id="expNo"></span>
+</div>
+
+<div class="section">
+<b>Name of the Experiment:</b> <span id="expName"></span>
+</div>
 
 <div class="submittedBox">
 
-<h3 style="text-align:center;">Submitted by</h3>
+<div class="submittedTitle">
+Submitted by
+</div>
 
-<p>Name: <span id="studentName"></span></p>
+<p><b>Name:</b> <span id="studentName"></span></p>
 
-<p>Department: EEE</p>
+<p><b>Department:</b> EEE</p>
 
-<p>Student ID: <span id="studentID"></span></p>
+<p><b>Student ID:</b> <span id="studentID"></span></p>
 
-<p>Group No: <span id="groupNo"></span></p>
+<p><b>Group No:</b> <span id="groupNo"></span></p>
 
-<p>Year / Semester: <span id="yearSem"></span></p>
+<p><b>Year / Semester:</b> <span id="yearSem"></span></p>
 
-<p>Session: <span id="session"></span></p>
+<p><b>Session:</b> <span id="session"></span></p>
 
 </div>
 
@@ -151,14 +240,14 @@ Course Code: <span id="courseCode"></span>
 
 <tr>
 
-<td><b>Marks Allocated</b></td>
-<td><b>Marks Obtained</b></td>
+<td>Marks Allocated</td>
+<td>Marks Obtained</td>
 
 </tr>
 
 <tr>
 
-<td height="60"></td>
+<td></td>
 <td></td>
 
 </tr>
@@ -173,121 +262,32 @@ Save as PDF
 
 <script>
 
-// simple fields
-document.getElementById("courseTitle").innerText = localStorage.getItem("courseTitle") || "";
-
-document.getElementById("courseCode").innerText = localStorage.getItem("courseCode") || "";
-
-document.getElementById("expNo").innerText = localStorage.getItem("expNo") || "";
-
-document.getElementById("expName").innerText = localStorage.getItem("expName") || "";
-
-document.getElementById("studentName").innerText = localStorage.getItem("studentName") || "";
-
-document.getElementById("studentID").innerText = localStorage.getItem("studentID") || "";
-
-document.getElementById("groupNo").innerText = localStorage.getItem("groupNo") || "";
-
-document.getElementById("yearSem").innerText = localStorage.getItem("yearSem") || "";
-
-document.getElementById("session").innerText = localStorage.getItem("session") || "";
-
+// fill text
+courseTitle.innerText = localStorage.courseTitle || "";
+courseCode.innerText = localStorage.courseCode || "";
+expNo.innerText = localStorage.expNo || "";
+expName.innerText = localStorage.expName || "";
+studentName.innerText = localStorage.studentName || "";
+studentID.innerText = localStorage.studentID || "";
+groupNo.innerText = localStorage.groupNo || "";
+yearSem.innerText = localStorage.yearSem || "";
+session.innerText = localStorage.session || "";
 
 // allocation date
-let allocDate = localStorage.getItem("allocationDate");
-
-if(allocDate){
-
-let parts = allocDate.split("-");
-
-document.getElementById("allocY").innerText = parts[0];
-
-document.getElementById("allocM").innerText = parts[1];
-
-document.getElementById("allocD").innerText = parts[2];
-
+if(localStorage.allocationDate){
+let d = localStorage.allocationDate.split("-");
+allocY.innerText = d[0];
+allocM.innerText = d[1];
+allocD.innerText = d[2];
 }
-
 
 // submission date
-let subDate = localStorage.getItem("submissionDate");
-
-if(subDate){
-
-let parts = subDate.split("-");
-
-document.getElementById("subY").innerText = parts[0];
-
-document.getElementById("subM").innerText = parts[1];
-
-document.getElementById("subD").innerText = parts[2];
-
+if(localStorage.submissionDate){
+let d = localStorage.submissionDate.split("-");
+subY.innerText = d[0];
+subM.innerText = d[1];
+subD.innerText = d[2];
 }
-
-</script>
-
-</body>
-</html>
-<p>Name: <span id="studentName"></span></p>
-
-<p>Department: EEE</p>
-
-<p>Student ID: <span id="studentID"></span></p>
-
-<p>Group No: <span id="groupNo"></span></p>
-
-<p>Year / Semester: <span id="yearSem"></span></p>
-
-<p>Session: <span id="session"></span></p>
-
-</div>
-
-<table class="marksTable">
-
-<tr>
-
-<td><b>Marks Allocated</b></td>
-<td><b>Marks Obtained</b></td>
-
-</tr>
-
-<tr>
-
-<td height="60"></td>
-<td></td>
-
-</tr>
-
-</table>
-
-<button class="printBtn" onclick="window.print()">
-Save as PDF
-</button>
-
-</div>
-
-<script>
-
-courseTitle.innerText = localStorage.courseTitle;
-courseCode.innerText = localStorage.courseCode;
-
-let alloc = localStorage.allocationDate.split("-");
-allocD.innerText = alloc[2];
-allocM.innerText = alloc[1];
-allocY.innerText = alloc[0];
-
-let sub = localStorage.submissionDate.split("-");
-subD.innerText = sub[2];
-subM.innerText = sub[1];
-subY.innerText = sub[0];
-
-expNo.innerText = localStorage.expNo;
-expName.innerText = localStorage.expName;
-studentName.innerText = localStorage.studentName;
-studentID.innerText = localStorage.studentID;
-groupNo.innerText = localStorage.groupNo;
-yearSem.innerText = localStorage.yearSem;
-session.innerText = localStorage.session;
 
 </script>
 
