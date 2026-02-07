@@ -7,25 +7,34 @@
 <style>
 
 body{
-font-family:"Times New Roman";
-background:#f4f4f4;
+font-family:"Times New Roman", serif;
+background:#f0f0f0;
 }
 
 .container{
-width:400px;
+width:450px;
 margin:auto;
+margin-top:40px;
 background:white;
-padding:20px;
-margin-top:50px;
-border-radius:10px;
+padding:25px;
+border-radius:8px;
 box-shadow:0 0 10px gray;
+}
+
+h2{
+text-align:center;
+}
+
+label{
+font-weight:bold;
 }
 
 input{
 width:100%;
 padding:8px;
 margin-top:5px;
-margin-bottom:10px;
+margin-bottom:12px;
+font-size:16px;
 }
 
 button{
@@ -34,7 +43,12 @@ padding:10px;
 background:black;
 color:white;
 border:none;
+font-size:16px;
 cursor:pointer;
+}
+
+button:hover{
+background:#333;
 }
 
 </style>
@@ -47,9 +61,11 @@ cursor:pointer;
 
 <h2>DUET Cover Page Generator</h2>
 
-<input id="courseTitle" placeholder="Course Title">
+<label>Course Title</label>
+<input id="courseTitle">
 
-<input id="courseCode" placeholder="Course Code">
+<label>Course Code</label>
+<input id="courseCode">
 
 <label>Date of Allocation</label>
 <input type="date" id="allocationDate">
@@ -57,49 +73,67 @@ cursor:pointer;
 <label>Date of Submission</label>
 <input type="date" id="submissionDate">
 
-<input id="expNo" placeholder="Experiment No">
+<label>Experiment No</label>
+<input id="expNo">
 
-<input id="expName" placeholder="Experiment Name">
+<label>Experiment Name</label>
+<input id="expName">
 
-<input id="studentName" placeholder="Student Name">
+<label>Student Name</label>
+<input id="studentName">
 
-<input id="studentID" placeholder="Student ID">
+<label>Student ID</label>
+<input id="studentID">
 
-<input id="groupNo" placeholder="Group No">
+<label>Group No</label>
+<input id="groupNo" value="A">
 
-<input id="yearSem" placeholder="Year / Semester">
+<label>Year / Semester</label>
+<input id="yearSem" placeholder="2nd / 1st">
 
-<input id="session" placeholder="Session">
+<label>Session</label>
+<input id="session" placeholder="2023-24">
 
-<button onclick="generate()">Generate Cover Page</button>
+<button onclick="generateCover()">Generate Cover Page</button>
 
 </div>
 
 <script>
 
-function generate(){
+function generateCover(){
 
-localStorage.setItem("courseTitle", document.getElementById("courseTitle").value);
+localStorage.setItem("courseTitle",
+document.getElementById("courseTitle").value);
 
-localStorage.setItem("courseCode", document.getElementById("courseCode").value);
+localStorage.setItem("courseCode",
+document.getElementById("courseCode").value);
 
-localStorage.setItem("allocationDate", document.getElementById("allocationDate").value);
+localStorage.setItem("allocationDate",
+document.getElementById("allocationDate").value);
 
-localStorage.setItem("submissionDate", document.getElementById("submissionDate").value);
+localStorage.setItem("submissionDate",
+document.getElementById("submissionDate").value);
 
-localStorage.setItem("expNo", document.getElementById("expNo").value);
+localStorage.setItem("expNo",
+document.getElementById("expNo").value);
 
-localStorage.setItem("expName", document.getElementById("expName").value);
+localStorage.setItem("expName",
+document.getElementById("expName").value);
 
-localStorage.setItem("studentName", document.getElementById("studentName").value);
+localStorage.setItem("studentName",
+document.getElementById("studentName").value);
 
-localStorage.setItem("studentID", document.getElementById("studentID").value);
+localStorage.setItem("studentID",
+document.getElementById("studentID").value);
 
-localStorage.setItem("groupNo", document.getElementById("groupNo").value);
+localStorage.setItem("groupNo",
+document.getElementById("groupNo").value);
 
-localStorage.setItem("yearSem", document.getElementById("yearSem").value);
+localStorage.setItem("yearSem",
+document.getElementById("yearSem").value);
 
-localStorage.setItem("session", document.getElementById("session").value);
+localStorage.setItem("session",
+document.getElementById("session").value);
 
 window.open("cover.html");
 
