@@ -2,27 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EEE Cover Page Generator - DUET</title>
+<title>DUET Cover Page Generator</title>
 
 <style>
 
 body{
-font-family: "Times New Roman", serif;
+font-family:"Times New Roman";
 background:#f4f4f4;
-padding:20px;
 }
 
 .container{
+width:400px;
+margin:auto;
 background:white;
 padding:20px;
-max-width:500px;
-margin:auto;
+margin-top:50px;
 border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-h2{
-text-align:center;
+box-shadow:0 0 10px gray;
 }
 
 input{
@@ -35,15 +31,10 @@ margin-bottom:10px;
 button{
 width:100%;
 padding:10px;
-background:#0066cc;
+background:black;
 color:white;
 border:none;
 cursor:pointer;
-font-size:16px;
-}
-
-button:hover{
-background:#004999;
 }
 
 </style>
@@ -54,15 +45,17 @@ background:#004999;
 
 <div class="container">
 
-<h2>DUET EEE Cover Page Generator</h2>
+<h2>DUET Cover Page Generator</h2>
 
 <input id="courseTitle" placeholder="Course Title">
 
 <input id="courseCode" placeholder="Course Code">
 
-<input id="allocationDate" placeholder="Allocation Date">
+<label>Date of Allocation</label>
+<input type="date" id="allocationDate">
 
-<input id="submissionDate" placeholder="Submission Date">
+<label>Date of Submission</label>
+<input type="date" id="submissionDate">
 
 <input id="expNo" placeholder="Experiment No">
 
@@ -86,88 +79,32 @@ background:#004999;
 
 function generate(){
 
-localStorage.setItem("courseTitle", courseTitle.value);
-localStorage.setItem("courseCode", courseCode.value);
-localStorage.setItem("allocationDate", allocationDate.value);
-localStorage.setItem("submissionDate", submissionDate.value);
-localStorage.setItem("expNo", expNo.value);
-localStorage.setItem("expName", expName.value);
-localStorage.setItem("studentName", studentName.value);
-localStorage.setItem("studentID", studentID.value);
-localStorage.setItem("groupNo", groupNo.value);
-localStorage.setItem("yearSem", yearSem.value);
-localStorage.setItem("session", session.value);
+localStorage.setItem("courseTitle", document.getElementById("courseTitle").value);
+
+localStorage.setItem("courseCode", document.getElementById("courseCode").value);
+
+localStorage.setItem("allocationDate", document.getElementById("allocationDate").value);
+
+localStorage.setItem("submissionDate", document.getElementById("submissionDate").value);
+
+localStorage.setItem("expNo", document.getElementById("expNo").value);
+
+localStorage.setItem("expName", document.getElementById("expName").value);
+
+localStorage.setItem("studentName", document.getElementById("studentName").value);
+
+localStorage.setItem("studentID", document.getElementById("studentID").value);
+
+localStorage.setItem("groupNo", document.getElementById("groupNo").value);
+
+localStorage.setItem("yearSem", document.getElementById("yearSem").value);
+
+localStorage.setItem("session", document.getElementById("session").value);
 
 window.open("cover.html");
 
 }
 
-</script>
-
-</body>
-</html>            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
-</div>
-
-<script>
-    function liveUpdate() {
-        document.getElementById('outCourseTitle').innerText = document.getElementById('inCourseTitle').value;
-        document.getElementById('outCourseCode').innerText = document.getElementById('inCourseCode').value;
-        document.getElementById('outExpNo').innerText = document.getElementById('inExpNo').value || "__________";
-        document.getElementById('outExpName').innerText = document.getElementById('inExpName').value || "___________________________________";
-        document.getElementById('outName').innerText = document.getElementById('inStudentName').value || "___________________________________";
-        document.getElementById('outID').innerText = document.getElementById('inID').value || "________________";
-        document.getElementById('outGroup').innerText = document.getElementById('inGroup').value;
-
-        // Date Formatting
-        formatDate('inAllocDate', 'outAllocDate');
-        formatDate('inSubDate', 'outSubDate');
-    }
-
-    function formatDate(inputId, outputId) {
-        const val = document.getElementById(inputId).value;
-        if(val) {
-            const d = new Date(val);
-            document.getElementById(outputId).innerText = `D: ${d.getDate()} M: ${d.getMonth()+1} Y: ${d.getFullYear()}`;
-        } else {
-            document.getElementById(outputId).innerText = "D: ___ M: ___ Y: ___";
-        }
-    }
-
-    function downloadPDF() {
-        const element = document.getElementById('cover-page');
-        const opt = {
-            margin: 0,
-            filename: 'DUET_Cover_Page.pdf',
-            image: { type: 'jpeg', quality: 1 },
-            html2canvas: { scale: 3, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(element).save();
-    }
-</script>
-
-</body>
-</html>            document.getElementById('outDateDisplay').innerText = `D: ${date.getDate()} M: ${date.getMonth()+1} Y: ${date.getFullYear()}`;
-        }
-    }
-
-    function generatePDF() {
-        const element = document.getElementById('cover-page');
-        const opt = {
-            margin: 0,
-            filename: 'DUET_Cover_Page.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(element).save();
-    }
 </script>
 
 </body>
