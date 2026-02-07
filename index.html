@@ -6,144 +6,192 @@
     <title>DUET Cover Page Generator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root { --primary-color: #2c3e50; --accent-color: #27ae60; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; display: flex; gap: 20px; }
+        body { font-family: 'Times New Roman', Times, serif; background: #f0f2f5; margin: 0; display: flex; }
         
-        /* Form Styling */
-        .form-container { width: 350px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 20px; }
-        .form-container h2 { margin-top: 0; color: var(--primary-color); font-size: 20px; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
-        .input-group { margin-bottom: 12px; }
-        .input-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
-        .input-group input, .input-group select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .btn-download { width: 100%; background: var(--accent-color); color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        .btn-download:hover { background: #219150; }
+        /* Sidebar Form Styling */
+        .sidebar { width: 350px; background: #ffffff; padding: 25px; height: 100vh; overflow-y: auto; box-shadow: 2px 0 10px rgba(0,0,0,0.1); position: fixed; left: 0; top: 0; }
+        .sidebar h2 { color: #157347; font-size: 20px; border-bottom: 2px solid #157347; padding-bottom: 10px; margin-bottom: 20px; }
+        .input-field { margin-bottom: 15px; }
+        .input-field label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; color: #333; }
+        .input-field input, .input-field select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .generate-btn { width: 100%; background: #157347; color: white; border: none; padding: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 10px; transition: 0.3s; }
+        .generate-btn:hover { background: #0e4d30; }
 
-        /* Cover Page Styling */
-        #cover-page { width: 210mm; min-height: 297mm; background: white; padding: 20mm; box-sizing: border-box; box-shadow: 0 0 20px rgba(0,0,0,0.1); margin: auto; }
-        .header { text-align: center; }
+        /* Preview Area */
+        .main-content { margin-left: 350px; flex-grow: 1; display: flex; justify-content: center; padding: 40px; }
+
+        /* Cover Page Styling (Exactly like your PDF) */
+        #cover-page { width: 210mm; min-height: 297mm; background: white; padding: 20mm 25mm; box-shadow: 0 0 20px rgba(0,0,0,0.2); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+        
         .motto { color: #157347; font-weight: bold; font-size: 18px; margin-bottom: 5px; }
-        .logo { width: 110px; margin: 10px 0; }
-        .uni-name { font-size: 20px; font-weight: bold; margin: 5px 0; }
-        .dept-name { font-size: 17px; font-weight: bold; margin-bottom: 30px; }
-        
-        .course-info { text-align: center; margin-bottom: 30px; }
-        .course-info p { margin: 5px 0; font-size: 18px; font-weight: bold; text-decoration: underline; }
+        .logo { width: 120px; margin: 15px 0; }
+        .uni-info { text-align: center; }
+        .uni-info h1 { font-size: 22px; margin: 5px 0; color: #000; }
+        .uni-info h2 { font-size: 18px; margin: 5px 0; font-weight: normal; }
+        .dept-name { font-size: 20px; font-weight: bold; margin: 10px 0 30px 0; }
 
-        .exp-section { margin-top: 30px; font-size: 16px; line-height: 1.6; }
-        .submission-box { border: 2px solid #000; padding: 25px; margin-top: 40px; position: relative; }
-        .sub-title { position: absolute; top: -14px; left: 20px; background: white; padding: 0 10px; font-weight: bold; }
+        .course-box { text-align: center; margin-bottom: 40px; }
+        .course-box p { font-size: 20px; font-weight: bold; margin: 8px 0; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
-        th, td { border: 1px solid black; padding: 10px; text-align: left; }
-        .center { text-align: center; }
+        .exp-details { width: 100%; font-size: 18px; margin-bottom: 30px; line-height: 1.8; }
+        .exp-details strong { min-width: 150px; display: inline-block; }
 
-        @media print { body { background: none; padding: 0; } .form-container { display: none; } #cover-page { box-shadow: none; } }
+        .submitted-container { border: 2px solid #000; width: 100%; padding: 25px; margin-top: 20px; position: relative; box-sizing: border-box; }
+        .submitted-label { position: absolute; top: -14px; left: 20px; background: white; padding: 0 10px; font-weight: bold; font-size: 16px; }
+        .submitted-container p { margin: 8px 0; font-size: 18px; }
+
+        /* Tables from PDF */
+        table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 16px; }
+        th, td { border: 1px solid black; padding: 12px; text-align: center; }
+        .marks-table { margin-top: 20px; }
+        .marks-table td { height: 60px; }
+
+        @media print {
+            .sidebar { display: none; }
+            .main-content { margin: 0; padding: 0; }
+            #cover-page { box-shadow: none; }
+        }
     </style>
 </head>
 <body>
 
-<div class="form-container">
-    <h2>Update Information</h2>
-    <div class="input-group">
+<div class="sidebar">
+    <h2>Cover Page Info</h2>
+    
+    <div class="input-field">
         <label>Course Title</label>
-        <input type="text" id="inCourseTitle" value="Electrical Machines-II Sessional" oninput="update()">
+        <input type="text" id="inCourseTitle" value="Electrical Machines-II Sessional" oninput="liveUpdate()">
     </div>
-    <div class="input-group">
+    <div class="input-field">
         <label>Course Code</label>
-        <input type="text" id="inCourseCode" value="EEE 2302" oninput="update()">
+        <input type="text" id="inCourseCode" value="EEE 2302" oninput="liveUpdate()">
     </div>
-    <div class="input-group">
+    <div class="input-field">
         <label>Experiment No.</label>
-        <input type="text" id="inExpNo" placeholder="e.g. 01" oninput="update()">
+        <input type="text" id="inExpNo" placeholder="e.g. 01" oninput="liveUpdate()">
     </div>
-    <div class="input-group">
-        <label>Experiment Name</label>
-        <input type="text" id="inExpName" placeholder="Enter name" oninput="update()">
+    <div class="input-field">
+        <label>Name of Experiment</label>
+        <input type="text" id="inExpName" placeholder="Enter topic" oninput="liveUpdate()">
     </div>
-    <div class="input-group">
+    <div class="input-field">
         <label>Student Name</label>
-        <input type="text" id="inName" placeholder="Your Name" oninput="update()">
+        <input type="text" id="inStudentName" placeholder="Your Full Name" oninput="liveUpdate()">
     </div>
-    <div class="input-group">
+    <div class="input-field">
         <label>Student ID</label>
-        <input type="text" id="inID" placeholder="Your ID" oninput="update()">
+        <input type="text" id="inID" placeholder="Your ID" oninput="liveUpdate()">
     </div>
-    <div class="input-group">
-        <label>Session</label>
-        <input type="text" id="inSession" value="2023-24" oninput="update()">
+    <div class="input-field">
+        <label>Group No.</label>
+        <input type="text" id="inGroup" value="A" oninput="liveUpdate()">
     </div>
-    <div class="input-group">
-        <label>Date of Submission</label>
-        <input type="date" id="inSubDate" oninput="update()">
+    <div class="input-field">
+        <label>Allocation Date</label>
+        <input type="date" id="inAllocDate" oninput="liveUpdate()">
     </div>
-    <button class="btn-download" onclick="generatePDF()">Download PDF</button>
+    <div class="input-field">
+        <label>Submission Date</label>
+        <input type="date" id="inSubDate" oninput="liveUpdate()">
+    </div>
+
+    <button class="generate-btn" onclick="downloadPDF()">Download PDF</button>
 </div>
 
-<div id="cover-page">
-    <div class="header">
-        [span_0](start_span)<div class="motto">প্রযুক্তিই প্রগতি[span_0](end_span)</div>
+<div class="main-content">
+    <div id="cover-page">
+        <div class="motto">প্রযুক্তিই প্রগতি</div>
         <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8b/Dhaka_University_of_Engineering_and_Technology_Logo.svg/1200px-Dhaka_University_of_Engineering_and_Technology_Logo.svg.png">
-        [span_1](start_span)<div class="uni-name">Dhaka University of Engineering and Technology, Gazipur-1707[span_1](end_span)</div>
-        [span_2](start_span)<div class="dept-name">Department of Electrical and Electronic Engineering[span_2](end_span)</div>
+        
+        <div class="uni-info">
+            <h1>Dhaka University of Engineering and Technology, Gazipur-1707</h1>
+            <div class="dept-name">Department of Electrical and Electronic Engineering</div>
+        </div>
+
+        <div class="course-box">
+            <p>Course Title: <span id="outCourseTitle">Electrical Machines-II Sessional</span></p>
+            <p>Course Code: <span id="outCourseCode">EEE 2302</span></p>
+        </div>
+
+        <div class="exp-details">
+            <p><strong>Experiment No.:</strong> <span id="outExpNo">__________</span></p>
+            <p><strong>Name of the Experiment:</strong> <span id="outExpName">___________________________________</span></p>
+        </div>
+
+        <div class="submitted-container">
+            <div class="submitted-label">Submitted by</div>
+            <p><strong>Name:</strong> <span id="outName">___________________________________</span></p>
+            <p><strong>Department:</strong> EEE</p>
+            <p><strong>Student ID:</strong> <span id="outID">________________</span></p>
+            <p><strong>Group No:</strong> <span id="outGroup">A</span></p>
+            <p><strong>Year / Semester:</strong> 2<sup>nd</sup> / 1<sup>st</sup></p>
+            <p><strong>Session:</strong> 2023-24</p>
+        </div>
+
+        <table>
+            <tr>
+                <th>Date of Allocation</th>
+                <th>Date of Submission</th>
+            </tr>
+            <tr>
+                <td id="outAllocDate">D: ___ M: ___ Y: ___</td>
+                <td id="outSubDate">D: ___ M: ___ Y: ___</td>
+            </tr>
+        </table>
+
+        <table class="marks-table">
+            <tr>
+                <th>Marks Allocated</th>
+                <th>Marks Obtained</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
     </div>
-
-    <div class="course-info">
-        [span_3](start_span)<p>Course Title: <span id="outCourseTitle">Electrical Machines-II Sessional</span>[span_3](end_span)</p>
-        [span_4](start_span)<p>Course Code: <span id="outCourseCode">EEE 2302</span>[span_4](end_span)</p>
-    </div>
-
-    <div class="exp-section">
-        [span_5](start_span)<p><strong>Experiment No.:</strong> <span id="outExpNo">________</span>[span_5](end_span)</p>
-        [span_6](start_span)<p><strong>Name of the Experiment:</strong> <span id="outExpName">____________________________________</span>[span_6](end_span)</p>
-    </div>
-
-    <div class="submission-box">
-        [span_7](start_span)<div class="sub-title">Submitted by[span_7](end_span)</div>
-        [span_8](start_span)<p><strong>Name:</strong> <span id="outName">___________________</span>[span_8](end_span)</p>
-        [span_9](start_span)<p><strong>Department:</strong> EEE[span_9](end_span)</p>
-        [span_10](start_span)<p><strong>Student ID:</strong> <span id="outID">___________________</span>[span_10](end_span)</p>
-        [span_11](start_span)<p><strong>Group No:</strong> A[span_11](end_span)</p>
-        [span_12](start_span)<p><strong>Year / Semester:</strong> 2<sup>nd</sup> / 1<sup>st</sup>[span_12](end_span)</p>
-        [span_13](start_span)<p><strong>Session:</strong> <span id="outSession">2023-24</span>[span_13](end_span)</p>
-    </div>
-
-    <table>
-        <tr>
-            [span_14](start_span)<th class="center">Date of Allocation[span_14](end_span)</th>
-            [span_15](start_span)<th class="center">Date of Submission[span_15](end_span)</th>
-        </tr>
-        <tr style="height: 45px;">
-            <td class="center">D: ___ M: ___ Y: ___</td>
-            <td class="center" id="outDateDisplay">D: ___ M: ___ Y: ___</td>
-        </tr>
-    </table>
-
-    <table>
-        <tr>
-            [span_16](start_span)<th>Marks Allocated[span_16](end_span)</th>
-            [span_17](start_span)<th>Marks Obtained[span_17](end_span)</th>
-        </tr>
-        <tr style="height: 60px;">
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
 </div>
 
 <script>
-    function update() {
+    function liveUpdate() {
         document.getElementById('outCourseTitle').innerText = document.getElementById('inCourseTitle').value;
         document.getElementById('outCourseCode').innerText = document.getElementById('inCourseCode').value;
-        document.getElementById('outExpNo').innerText = document.getElementById('inExpNo').value || "________";
-        document.getElementById('outExpName').innerText = document.getElementById('inExpName').value || "____________________________________";
-        document.getElementById('outName').innerText = document.getElementById('inName').value || "___________________";
-        document.getElementById('outID').innerText = document.getElementById('inID').value || "___________________";
-        document.getElementById('outSession').innerText = document.getElementById('inSession').value;
-        
-        const dateVal = document.getElementById('inSubDate').value;
-        if(dateVal) {
-            const date = new Date(dateVal);
-            document.getElementById('outDateDisplay').innerText = `D: ${date.getDate()} M: ${date.getMonth()+1} Y: ${date.getFullYear()}`;
+        document.getElementById('outExpNo').innerText = document.getElementById('inExpNo').value || "__________";
+        document.getElementById('outExpName').innerText = document.getElementById('inExpName').value || "___________________________________";
+        document.getElementById('outName').innerText = document.getElementById('inStudentName').value || "___________________________________";
+        document.getElementById('outID').innerText = document.getElementById('inID').value || "________________";
+        document.getElementById('outGroup').innerText = document.getElementById('inGroup').value;
+
+        // Date Formatting
+        formatDate('inAllocDate', 'outAllocDate');
+        formatDate('inSubDate', 'outSubDate');
+    }
+
+    function formatDate(inputId, outputId) {
+        const val = document.getElementById(inputId).value;
+        if(val) {
+            const d = new Date(val);
+            document.getElementById(outputId).innerText = `D: ${d.getDate()} M: ${d.getMonth()+1} Y: ${d.getFullYear()}`;
+        } else {
+            document.getElementById(outputId).innerText = "D: ___ M: ___ Y: ___";
+        }
+    }
+
+    function downloadPDF() {
+        const element = document.getElementById('cover-page');
+        const opt = {
+            margin: 0,
+            filename: 'DUET_Cover_Page.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 3, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+
+</body>
+</html>            document.getElementById('outDateDisplay').innerText = `D: ${date.getDate()} M: ${date.getMonth()+1} Y: ${date.getFullYear()}`;
         }
     }
 
