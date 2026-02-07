@@ -1,149 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUET Cover Page Generator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        body { font-family: 'Times New Roman', Times, serif; background: #f0f2f5; margin: 0; display: flex; }
-        
-        /* Sidebar Form Styling */
-        .sidebar { width: 350px; background: #ffffff; padding: 25px; height: 100vh; overflow-y: auto; box-shadow: 2px 0 10px rgba(0,0,0,0.1); position: fixed; left: 0; top: 0; }
-        .sidebar h2 { color: #157347; font-size: 20px; border-bottom: 2px solid #157347; padding-bottom: 10px; margin-bottom: 20px; }
-        .input-field { margin-bottom: 15px; }
-        .input-field label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; color: #333; }
-        .input-field input, .input-field select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .generate-btn { width: 100%; background: #157347; color: white; border: none; padding: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 10px; transition: 0.3s; }
-        .generate-btn:hover { background: #0e4d30; }
+<meta charset="UTF-8">
+<title>EEE Cover Page Generator - DUET</title>
 
-        /* Preview Area */
-        .main-content { margin-left: 350px; flex-grow: 1; display: flex; justify-content: center; padding: 40px; }
+<style>
 
-        /* Cover Page Styling (Exactly like your PDF) */
-        #cover-page { width: 210mm; min-height: 297mm; background: white; padding: 20mm 25mm; box-shadow: 0 0 20px rgba(0,0,0,0.2); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
-        
-        .motto { color: #157347; font-weight: bold; font-size: 18px; margin-bottom: 5px; }
-        .logo { width: 120px; margin: 15px 0; }
-        .uni-info { text-align: center; }
-        .uni-info h1 { font-size: 22px; margin: 5px 0; color: #000; }
-        .uni-info h2 { font-size: 18px; margin: 5px 0; font-weight: normal; }
-        .dept-name { font-size: 20px; font-weight: bold; margin: 10px 0 30px 0; }
+body{
+font-family: "Times New Roman", serif;
+background:#f4f4f4;
+padding:20px;
+}
 
-        .course-box { text-align: center; margin-bottom: 40px; }
-        .course-box p { font-size: 20px; font-weight: bold; margin: 8px 0; }
+.container{
+background:white;
+padding:20px;
+max-width:500px;
+margin:auto;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
 
-        .exp-details { width: 100%; font-size: 18px; margin-bottom: 30px; line-height: 1.8; }
-        .exp-details strong { min-width: 150px; display: inline-block; }
+h2{
+text-align:center;
+}
 
-        .submitted-container { border: 2px solid #000; width: 100%; padding: 25px; margin-top: 20px; position: relative; box-sizing: border-box; }
-        .submitted-label { position: absolute; top: -14px; left: 20px; background: white; padding: 0 10px; font-weight: bold; font-size: 16px; }
-        .submitted-container p { margin: 8px 0; font-size: 18px; }
+input{
+width:100%;
+padding:8px;
+margin-top:5px;
+margin-bottom:10px;
+}
 
-        /* Tables from PDF */
-        table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 16px; }
-        th, td { border: 1px solid black; padding: 12px; text-align: center; }
-        .marks-table { margin-top: 20px; }
-        .marks-table td { height: 60px; }
+button{
+width:100%;
+padding:10px;
+background:#0066cc;
+color:white;
+border:none;
+cursor:pointer;
+font-size:16px;
+}
 
-        @media print {
-            .sidebar { display: none; }
-            .main-content { margin: 0; padding: 0; }
-            #cover-page { box-shadow: none; }
-        }
-    </style>
+button:hover{
+background:#004999;
+}
+
+</style>
+
 </head>
+
 <body>
 
-<div class="sidebar">
-    <h2>Cover Page Info</h2>
-    
-    <div class="input-field">
-        <label>Course Title</label>
-        <input type="text" id="inCourseTitle" value="Electrical Machines-II Sessional" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Course Code</label>
-        <input type="text" id="inCourseCode" value="EEE 2302" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Experiment No.</label>
-        <input type="text" id="inExpNo" placeholder="e.g. 01" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Name of Experiment</label>
-        <input type="text" id="inExpName" placeholder="Enter topic" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Student Name</label>
-        <input type="text" id="inStudentName" placeholder="Your Full Name" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Student ID</label>
-        <input type="text" id="inID" placeholder="Your ID" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Group No.</label>
-        <input type="text" id="inGroup" value="A" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Allocation Date</label>
-        <input type="date" id="inAllocDate" oninput="liveUpdate()">
-    </div>
-    <div class="input-field">
-        <label>Submission Date</label>
-        <input type="date" id="inSubDate" oninput="liveUpdate()">
-    </div>
+<div class="container">
 
-    <button class="generate-btn" onclick="downloadPDF()">Download PDF</button>
+<h2>DUET EEE Cover Page Generator</h2>
+
+<input id="courseTitle" placeholder="Course Title">
+
+<input id="courseCode" placeholder="Course Code">
+
+<input id="allocationDate" placeholder="Allocation Date">
+
+<input id="submissionDate" placeholder="Submission Date">
+
+<input id="expNo" placeholder="Experiment No">
+
+<input id="expName" placeholder="Experiment Name">
+
+<input id="studentName" placeholder="Student Name">
+
+<input id="studentID" placeholder="Student ID">
+
+<input id="groupNo" placeholder="Group No">
+
+<input id="yearSem" placeholder="Year / Semester">
+
+<input id="session" placeholder="Session">
+
+<button onclick="generate()">Generate Cover Page</button>
+
 </div>
 
-<div class="main-content">
-    <div id="cover-page">
-        <div class="motto">প্রযুক্তিই প্রগতি</div>
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8b/Dhaka_University_of_Engineering_and_Technology_Logo.svg/1200px-Dhaka_University_of_Engineering_and_Technology_Logo.svg.png">
-        
-        <div class="uni-info">
-            <h1>Dhaka University of Engineering and Technology, Gazipur-1707</h1>
-            <div class="dept-name">Department of Electrical and Electronic Engineering</div>
-        </div>
+<script>
 
-        <div class="course-box">
-            <p>Course Title: <span id="outCourseTitle">Electrical Machines-II Sessional</span></p>
-            <p>Course Code: <span id="outCourseCode">EEE 2302</span></p>
-        </div>
+function generate(){
 
-        <div class="exp-details">
-            <p><strong>Experiment No.:</strong> <span id="outExpNo">__________</span></p>
-            <p><strong>Name of the Experiment:</strong> <span id="outExpName">___________________________________</span></p>
-        </div>
+localStorage.setItem("courseTitle", courseTitle.value);
+localStorage.setItem("courseCode", courseCode.value);
+localStorage.setItem("allocationDate", allocationDate.value);
+localStorage.setItem("submissionDate", submissionDate.value);
+localStorage.setItem("expNo", expNo.value);
+localStorage.setItem("expName", expName.value);
+localStorage.setItem("studentName", studentName.value);
+localStorage.setItem("studentID", studentID.value);
+localStorage.setItem("groupNo", groupNo.value);
+localStorage.setItem("yearSem", yearSem.value);
+localStorage.setItem("session", session.value);
 
-        <div class="submitted-container">
-            <div class="submitted-label">Submitted by</div>
-            <p><strong>Name:</strong> <span id="outName">___________________________________</span></p>
-            <p><strong>Department:</strong> EEE</p>
-            <p><strong>Student ID:</strong> <span id="outID">________________</span></p>
-            <p><strong>Group No:</strong> <span id="outGroup">A</span></p>
-            <p><strong>Year / Semester:</strong> 2<sup>nd</sup> / 1<sup>st</sup></p>
-            <p><strong>Session:</strong> 2023-24</p>
-        </div>
+window.open("cover.html");
 
-        <table>
-            <tr>
-                <th>Date of Allocation</th>
-                <th>Date of Submission</th>
-            </tr>
-            <tr>
-                <td id="outAllocDate">D: ___ M: ___ Y: ___</td>
-                <td id="outSubDate">D: ___ M: ___ Y: ___</td>
-            </tr>
-        </table>
+}
 
-        <table class="marks-table">
-            <tr>
-                <th>Marks Allocated</th>
-                <th>Marks Obtained</th>
-            </tr>
+</script>
+
+</body>
+</html>            </tr>
             <tr>
                 <td></td>
                 <td></td>
